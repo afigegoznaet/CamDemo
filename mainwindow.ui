@@ -27,42 +27,42 @@
        <item row="0" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="loadButton">
            <property name="text">
-            <string>Load</string>
+            <string>&amp;Load</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="saveButton">
            <property name="text">
-            <string>Save</string>
+            <string>&amp;Save</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="saveAsButton">
            <property name="text">
-            <string>Save as</string>
+            <string>Save &amp;as</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="playButton">
            <property name="text">
-            <string>Play / Pause</string>
+            <string>Play /&amp; Pause</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_5">
+          <widget class="QPushButton" name="stopButton">
            <property name="text">
             <string>Stop</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_6">
+          <widget class="QPushButton" name="stillButton">
            <property name="text">
             <string>Play/still</string>
            </property>
@@ -113,19 +113,6 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0" colspan="3">
-            <spacer name="verticalSpacer0">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item row="1" column="1">
             <widget class="VideoWidget" name="cam0" native="true"/>
            </item>
@@ -157,19 +144,6 @@
               <string>Cam1</string>
              </property>
             </widget>
-           </item>
-           <item row="1" column="0" colspan="3">
-            <spacer name="verticalSpacer1">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
            </item>
            <item row="0" column="2">
             <widget class="QPushButton" name="pushButton1">
@@ -233,7 +207,7 @@
    </widget>
    <widget class="QMenu" name="menuSelect_Media">
     <property name="title">
-     <string>&amp;Select &amp;Widgets</string>
+     <string>S&amp;elect &amp;Widgets</string>
     </property>
     <addaction name="actionCAM0"/>
     <addaction name="actionCAM1"/>

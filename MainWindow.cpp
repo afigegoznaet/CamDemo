@@ -14,15 +14,22 @@ MainWindow::MainWindow(QWidget *parent) :
 	player1 = new QMediaPlayer(this);
 	player1->setVideoOutput(ui->cam1);
 
-/*
-	flex0->setVisible(false);
-	can0->setVisible(false);
-	ae0->setVisible(false);
+	ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+	connect(ui->playButton, &QPushButton::clicked, [&](){
+		if(player1->position() > lastPosition && player1->isVideoAvailable()){
+			player0->pause();
+			player1->pause();
+			ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+		}else if(player1->isVideoAvailable()){
+			lastPosition = player1->position();
+			player0->play();
+			player1->play();
+			ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+		}
 
-	flex1->setVisible(false);
-	can1->setVisible(false);
-	ae1->setVisible(false);
-*/
+	});
+
+	connect(player1, SIGNAL(durationChanged(qint64)), ui->playButton, SIGNAL(clicked(bool)));
 
 
 	loadSettings();

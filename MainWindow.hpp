@@ -47,7 +47,7 @@ private:
 
 	QMediaPlayer* player0;
 	QMediaPlayer* player1;
-
+	qint64 lastPosition = 0;
 
 	CustomModel * model;
 
