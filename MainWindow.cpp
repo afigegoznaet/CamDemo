@@ -1,15 +1,18 @@
-#include "mainwindow.h"
+#include "MainWindow.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
-	ui(new Ui::MainWindow)
-{
+	ui(new Ui::MainWindow){
 	ui->setupUi(this);
 
 	ui->tabWidget->setUsesScrollButtons(true);
 	ui->tabWidget->tabBar()->setTabsClosable(true);
+	player0 = new QMediaPlayer(this);
+	player0->setVideoOutput(ui->cam0);
 
+	player1 = new QMediaPlayer(this);
+	player1->setVideoOutput(ui->cam1);
 
 /*
 	flex0->setVisible(false);
@@ -28,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->actionE_xit, &QAction::triggered, [&](){
 		QApplication::quit();
 	});
+
+	connect(ui->actionSelect_Media_File, &QAction::triggered, [&](){this->openFile(player1);});
 
 	connect(ui->actionCAM0, &QAction::changed, [&](){setframeState(ui->actionCAM0, ui->frame0);});
 	connect(ui->actionCAM1, &QAction::changed, [&](){setframeState(ui->actionCAM1, ui->frame1);});
@@ -54,6 +59,28 @@ void MainWindow::setframeState(QAction* elem, QFrame* frame){
 		frame->setVisible(false);
 
 }
+
+
+void MainWindow::openFile(QMediaPlayer *player){
+	QFileDialog fileDialog(this);
+	fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+	fileDialog.setWindowTitle(tr("Open File"));
+	QStringList supportedMimeTypes = player->supportedMimeTypes();
+	if (!supportedMimeTypes.isEmpty())
+		fileDialog.setMimeTypeFilters(supportedMimeTypes);
+	fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).value(0, QDir::homePath()));
+	if (fileDialog.exec() == QDialog::Accepted)
+		setUrl(player, fileDialog.selectedUrls().constFirst());
+}
+
+void MainWindow::setUrl(QMediaPlayer* player, const QUrl &url){
+	//errorLabel->setText(QString());
+	setWindowFilePath(url.isLocalFile() ? url.toLocalFile() : QString());
+	player->setMedia(url);
+	player->play();
+
+}
+
 
 void MainWindow::setupTabs(){
 	flex0 = new QTableView(ui->tabWidget);

@@ -4,8 +4,7 @@
 #include <QObject>
 #include <QAbstractTableModel>
 
-class CustomModel : public QAbstractTableModel
-{
+class CustomModel : public QAbstractTableModel{
 	Q_OBJECT
 public:
 	explicit CustomModel(QObject *parent = Q_NULLPTR);

@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia multimediawidgets
 
 TARGET = CamDemo
 TEMPLATE = app
@@ -25,12 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-    CustomModel.cpp
+    CustomModel.cpp \
+    VideoWidget.cpp \
+    MainWindow.cpp
 
 HEADERS += \
-        mainwindow.h \
-    CustomModel.hpp
+    CustomModel.hpp \
+    VideoWidget.hpp \
+    MainWindow.hpp
 
 FORMS += \
         mainwindow.ui

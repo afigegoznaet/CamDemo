@@ -6,20 +6,29 @@
 #include <QDebug>
 #include <QFrame>
 #include <QTableView>
+#include <QMediaPlayer>
+#include <QFileDialog>
+#include <QDir>
+#include <QStandardPaths>
+
+#include "VideoWidget.hpp"
 #include "CustomModel.hpp"
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow{
 	Q_OBJECT
 
 public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 	void setupTabs();
+
+private slots:
+	void openFile(QMediaPlayer* player);
+	void setUrl(QMediaPlayer* player, const QUrl &url);
 
 private:
 	void saveSettings();
@@ -35,6 +44,10 @@ private:
 	QTableView* flex1 = nullptr;
 	QTableView* can1 = nullptr;
 	QTableView* ae1 = nullptr;
+
+	QMediaPlayer* player0;
+	QMediaPlayer* player1;
+
 
 	CustomModel * model;
 
