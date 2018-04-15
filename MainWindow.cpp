@@ -14,22 +14,37 @@ MainWindow::MainWindow(QWidget *parent) :
 	player1 = new QMediaPlayer(this);
 	player1->setVideoOutput(ui->cam1);
 
-	ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
-	connect(ui->playButton, &QPushButton::clicked, [&](){
-		if(player1->position() > lastPosition && player1->isVideoAvailable()){
-			player0->pause();
-			player1->pause();
-			ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
-		}else if(player1->isVideoAvailable()){
-			lastPosition = player1->position();
-			player0->play();
-			player1->play();
-			ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
-		}
+	ui->horizontalSlider->setRange(0,0);
 
+	ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+
+	ui->stopButton->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
+
+	ui->stillButton->setIcon(style()->standardIcon(QStyle::SP_ToolBarHorizontalExtensionButton));
+
+	connect(ui->horizontalSlider, &QAbstractSlider::sliderMoved,
+			[&](int value){
+				player1->pause();
+				player1->setPosition(value);
+				player1->play();
+		});
+
+	connect(ui->horizontalSlider, SIGNAL(sliderMoved(int)),
+			player1, SLOT(setPosition(qint64)));
+
+	connect(player1, &QMediaPlayer::positionChanged, [&](qint64 position){
+		ui->horizontalSlider->setValue(position);
+		ui->ts1->setText(QString::number(position));
 	});
 
-	connect(player1, SIGNAL(durationChanged(qint64)), ui->playButton, SIGNAL(clicked(bool)));
+	connect(player1, &QMediaPlayer::durationChanged, [&](){
+		if(player1->duration() == 0)
+			return;
+		ui->horizontalSlider->setRange(0, player1->duration());
+		ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+		ui->ts0->setText("0");
+		ui->ts1->setText("0");
+	});
 
 
 	loadSettings();
@@ -186,3 +201,35 @@ void MainWindow::loadSettings(){
 }
 
 
+
+void MainWindow::on_playButton_clicked(){
+	if(player1->position() > lastPosition && player1->isVideoAvailable()){
+		qDebug()<<"Position: "<<player1->position() << " "<<lastPosition;
+		lastPosition = player1->position();
+		player0->pause();
+		player1->pause();
+		ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+
+	}else if(player1->isVideoAvailable()){
+		qDebug()<<"Button: "<<player1->isVideoAvailable();
+
+		player0->play();
+		player1->play();
+		ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+	}
+}
+
+void MainWindow::on_stopButton_clicked(){
+	player0->stop();
+	player1->stop();
+}
+
+void MainWindow::on_stillButton_clicked(){
+	if(!player1->isVideoAvailable())
+		return;
+	ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+	player0->pause();
+	player1->pause();
+	lastPosition = player1->position();
+	player1->setPosition(++lastPosition);
+}

@@ -30,6 +30,12 @@ private slots:
 	void openFile(QMediaPlayer* player);
 	void setUrl(QMediaPlayer* player, const QUrl &url);
 
+	void on_playButton_clicked();
+
+	void on_stopButton_clicked();
+
+	void on_stillButton_clicked();
+
 private:
 	void saveSettings();
 	void loadSettings();
