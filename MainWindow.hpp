@@ -36,6 +36,13 @@ private slots:
 
 	void on_stillButton_clicked();
 
+	void on_fs0_clicked();
+
+	void on_fs1_clicked();
+
+
+	void on_horizontalSlider_actionTriggered(int action);
+
 private:
 	void saveSettings();
 	void loadSettings();

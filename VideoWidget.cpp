@@ -13,7 +13,8 @@ void VideoWidget::keyPressEvent(QKeyEvent *event){
 		setFullScreen(false);
 		event->accept();
 	} else if (event->key() == Qt::Key_Enter && event->modifiers() & Qt::Key_Alt) {
-		setFullScreen(!isFullScreen());
+		if(hasVideo)
+			setFullScreen(!isFullScreen());
 		event->accept();
 	} else {
 		QVideoWidget::keyPressEvent(event);
@@ -22,9 +23,11 @@ void VideoWidget::keyPressEvent(QKeyEvent *event){
 
 void VideoWidget::mouseDoubleClickEvent(QMouseEvent *event){
 	qDebug()<<"window state before "<<windowState();
-	setFullScreen(!isFullScreen());
+	setFullScreen(hasVideo && !isFullScreen());
+
 	event->accept();
 	qDebug()<<"window state after "<<windowState();
+
 }
 
 void VideoWidget::mousePressEvent(QMouseEvent *event){

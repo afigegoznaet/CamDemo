@@ -6,6 +6,15 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow){
 	ui->setupUi(this);
 
+	QTableView* flex0 = nullptr;
+	QTableView* can0 = nullptr;
+	QTableView* ae0 = nullptr;
+
+	QTableView* flex1 = nullptr;
+	QTableView* can1 = nullptr;
+	QTableView* ae1 = nullptr;
+
+
 	ui->tabWidget->setUsesScrollButtons(true);
 	ui->tabWidget->tabBar()->setTabsClosable(true);
 	player0 = new QMediaPlayer(this);
@@ -39,7 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	connect(player1, &QMediaPlayer::durationChanged, [&](){
 		if(player1->duration() == 0)
-			return;
+			return ui->cam1->setHasVideo(false);
+		ui->cam1->setHasVideo(true);
 		ui->horizontalSlider->setRange(0, player1->duration());
 		ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
 		ui->ts0->setText("0");
@@ -134,6 +144,35 @@ void MainWindow::setupTabs(){
 	ae1->setModel(model);
 	if(ui->actionAE1->isChecked())
 		ui->tabWidget->addTab(ae1, "AE1");
+
+	connect(ui->tabWidget->tabBar(), &QTabBar::tabCloseRequested, [&](int idx){
+		auto wgt = ui->tabWidget->widget(idx);
+		qDebug()<<"Idx: "<<idx;
+		qDebug()<<wgt;
+		qDebug()<<wgt->objectName();
+		qDebug()<<flex1;
+		qDebug()<<flex1->objectName();
+		qDebug()<<flex0;
+		qDebug()<<flex0->objectName();
+		if(wgt == flex0)
+			ui->actionFlexRay0->setChecked(false);
+		if(wgt == flex1)
+			ui->actionFlexRay1->setChecked(false);
+		if(wgt == can0)
+			ui->actionCAN0->setChecked(false);
+
+		if(wgt == can1)
+			ui->actionCAN1->setChecked(false);
+
+		if(wgt == ae0)
+			ui->actionAE0->setChecked(false);
+
+		if(wgt == ae1)
+			ui->actionAE1->setChecked(false);
+
+		ui->tabWidget->removeTab(idx);
+
+	});
 
 }
 
@@ -232,4 +271,18 @@ void MainWindow::on_stillButton_clicked(){
 	player1->pause();
 	lastPosition = player1->position();
 	player1->setPosition(++lastPosition);
+}
+
+void MainWindow::on_fs0_clicked(){
+	if(player0->isVideoAvailable())
+		ui->cam1->setFullScreen(true);
+}
+
+void MainWindow::on_fs1_clicked(){
+	if(player1->isVideoAvailable())
+		ui->cam1->setFullScreen(true);
+}
+
+void MainWindow::on_horizontalSlider_actionTriggered(int action){
+	qDebug()<<"Action: "<<action;
 }
