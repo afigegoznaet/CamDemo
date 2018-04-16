@@ -38,9 +38,6 @@ MainWindow::MainWindow(QWidget *parent) :
 				player1->play();
 		});
 
-	connect(ui->horizontalSlider, SIGNAL(sliderMoved(int)),
-			player1, SLOT(setPosition(qint64)));
-
 	connect(player1, &QMediaPlayer::positionChanged, [&](qint64 position){
 		ui->horizontalSlider->setValue(position);
 		ui->ts1->setText(QString::number(position));
@@ -215,6 +212,7 @@ void MainWindow::saveSettings(){
 	settings.setValue("Ae1", ui->actionAE1->isChecked());
 
 	settings.endGroup();
+	settings.sync();
 }
 
 void MainWindow::loadSettings(){
@@ -237,6 +235,7 @@ void MainWindow::loadSettings(){
 	if(!ui->splitter->restoreState(splitterSizes))
 		ui->splitter->setSizes({200,200});
 	settings.endGroup();
+
 }
 
 
