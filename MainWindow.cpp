@@ -212,8 +212,6 @@ void MainWindow::saveSettings(){
 	//Menus
 	settings.setValue("Cam0", ui->actionCAM0->isChecked());
 	settings.setValue("Cam1", ui->actionCAM1->isChecked());
-	settings.setValue("Cam2", ui->actionCAM2->isChecked());
-	settings.setValue("Cam3", ui->actionCAM3->isChecked());
 	settings.setValue("Flex0", ui->actionFlexRay0->isChecked());
 	settings.setValue("Flex1", ui->actionFlexRay1->isChecked());
 	settings.setValue("Can0", ui->actionCAN0->isChecked());
@@ -233,8 +231,6 @@ void MainWindow::loadSettings(){
 
 	ui->actionCAM0->setChecked(settings.value("Cam0", true).toBool());
 	ui->actionCAM1->setChecked(settings.value("Cam1", true).toBool());
-	ui->actionCAM2->setChecked(settings.value("Cam2", false).toBool());
-	ui->actionCAM3->setChecked(settings.value("Cam3", false).toBool());
 
 	ui->actionFlexRay0->setChecked(settings.value("Flex0", true).toBool());
 	ui->actionFlexRay1->setChecked(settings.value("Flex1", false).toBool());
