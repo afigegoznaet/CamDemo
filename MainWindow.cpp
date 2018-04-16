@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	player1 = new QMediaPlayer(this);
 	player1->setVideoOutput(ui->cam1);
 
+
+
 	ui->horizontalSlider->setRange(0,0);
 
 	ui->playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
@@ -78,6 +80,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->actionE_xit->setShortcut(QKeySequence::Quit);
 	ui->actionE_xit->setShortcut(QKeySequence(Qt::ALT + Qt::Key_X));
 
+	connect(ui->actionLoad_config_file, SIGNAL(triggered(bool)), this, SLOT(loadConfig()));
+	connect(ui->actionSave_config_file, SIGNAL(triggered(bool)), this, SLOT(saveConfig()));
+	connect(ui->actionEdit_config, SIGNAL(triggered(bool)), this, SLOT(showConfigWindow()));
+
+	confDlg = new ConfigDialog(this);
+	confDlg->setModal(true);
 }
 
 void MainWindow::setframeState(QAction* elem, QFrame* frame){
@@ -204,6 +212,8 @@ void MainWindow::saveSettings(){
 	//Menus
 	settings.setValue("Cam0", ui->actionCAM0->isChecked());
 	settings.setValue("Cam1", ui->actionCAM1->isChecked());
+	settings.setValue("Cam2", ui->actionCAM2->isChecked());
+	settings.setValue("Cam3", ui->actionCAM3->isChecked());
 	settings.setValue("Flex0", ui->actionFlexRay0->isChecked());
 	settings.setValue("Flex1", ui->actionFlexRay1->isChecked());
 	settings.setValue("Can0", ui->actionCAN0->isChecked());
@@ -212,7 +222,7 @@ void MainWindow::saveSettings(){
 	settings.setValue("Ae1", ui->actionAE1->isChecked());
 
 	settings.endGroup();
-	settings.sync();
+
 }
 
 void MainWindow::loadSettings(){
@@ -223,6 +233,9 @@ void MainWindow::loadSettings(){
 
 	ui->actionCAM0->setChecked(settings.value("Cam0", true).toBool());
 	ui->actionCAM1->setChecked(settings.value("Cam1", true).toBool());
+	ui->actionCAM2->setChecked(settings.value("Cam2", false).toBool());
+	ui->actionCAM3->setChecked(settings.value("Cam3", false).toBool());
+
 	ui->actionFlexRay0->setChecked(settings.value("Flex0", true).toBool());
 	ui->actionFlexRay1->setChecked(settings.value("Flex1", false).toBool());
 	ui->actionCAN0->setChecked(settings.value("Can0", true).toBool());
@@ -282,6 +295,14 @@ void MainWindow::on_fs1_clicked(){
 		ui->cam1->setFullScreen(true);
 }
 
-void MainWindow::on_horizontalSlider_actionTriggered(int action){
-	qDebug()<<"Action: "<<action;
+void MainWindow::showConfigWindow(){
+	confDlg->exec();
+}
+
+void MainWindow::saveConfig(){
+
+}
+
+void MainWindow::loadConfig(){
+
 }

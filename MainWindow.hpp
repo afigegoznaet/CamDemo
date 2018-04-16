@@ -11,6 +11,7 @@
 #include <QDir>
 #include <QStandardPaths>
 
+#include "ConfigDialog.hpp"
 #include "VideoWidget.hpp"
 #include "CustomModel.hpp"
 
@@ -29,19 +30,15 @@ public:
 private slots:
 	void openFile(QMediaPlayer* player);
 	void setUrl(QMediaPlayer* player, const QUrl &url);
-
 	void on_playButton_clicked();
-
 	void on_stopButton_clicked();
-
 	void on_stillButton_clicked();
-
 	void on_fs0_clicked();
-
 	void on_fs1_clicked();
+	void showConfigWindow();
+	void saveConfig();
+	void loadConfig();
 
-
-	void on_horizontalSlider_actionTriggered(int action);
 
 private:
 	void saveSettings();
@@ -60,9 +57,13 @@ private:
 
 	QMediaPlayer* player0;
 	QMediaPlayer* player1;
+	QMediaPlayer* player2;
+	QMediaPlayer* player3;
+
 	qint64 lastPosition = 0;
 
 	CustomModel * model;
+	ConfigDialog* confDlg;
 
 	Ui::MainWindow *ui;
 };

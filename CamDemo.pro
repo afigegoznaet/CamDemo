@@ -27,12 +27,15 @@ SOURCES += \
         main.cpp \
     CustomModel.cpp \
     VideoWidget.cpp \
-    MainWindow.cpp
+    MainWindow.cpp \
+    ConfigDialog.cpp
 
 HEADERS += \
     CustomModel.hpp \
     VideoWidget.hpp \
-    MainWindow.hpp
+    MainWindow.hpp \
+    ConfigDialog.hpp
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    ConfigDialog.ui
